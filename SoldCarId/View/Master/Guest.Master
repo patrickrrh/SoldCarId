@@ -1,0 +1,35 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Guest.master.cs" Inherits="SoldCarId.View.Master.Guest" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="../CSS/guestNavBarStyle.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container">
+            <div class="navbar">
+                <div>
+                    <asp:Label ID="SoldCarId" runat="server" Text="SoldCarId" CssClass="navbar-logo"></asp:Label>
+                </div>
+                <div class="navbar-menu">
+                    <asp:HyperLink runat="server" NavigateUrl="~/View/Home.aspx" Text="Home"></asp:HyperLink>
+                </div>
+                <asp:HyperLink runat="server" NavigateUrl="~/View/Login.aspx" Text="Login" CssClass="loginRegister-button" Style="text-decoration: none"></asp:HyperLink>
+                <asp:HyperLink runat="server" NavigateUrl="~/View/Register.aspx" Text="Register" CssClass="loginRegister-button" Style="text-decoration: none"></asp:HyperLink>
+            </div>
+            <div class="content">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+            <div class="footer">
+                SoldCarId - Find Your Dream Car - &copy; 2023
+            </div>
+        </div>
+    </form>
+</body>
+</html>

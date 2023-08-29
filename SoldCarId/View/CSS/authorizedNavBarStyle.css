@@ -1,0 +1,75 @@
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.containerNav {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: #98c942;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar-logo {
+    font-weight: bold;
+    font-family: 'Poetsen One';
+    font-size: larger;
+    color: black;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 40px;
+    gap: 40px;
+}
+
+    .navbar-menu a {
+        font-weight: bold;
+        font-family: Arial;
+        color: black;
+        text-decoration: none;
+    }
+
+        .navbar-menu a:hover {
+            color: yellow;
+        }
+
+.logout-button {
+    background-color: black;
+    color: #98c942;
+    font-weight: bold;
+    font-family: Arial;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 20px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 3px solid transparent;
+}
+
+    .logout-button:hover {
+        background-color: lightgrey;
+        color: black;
+    }
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #98c942;
+    color: black;
+}

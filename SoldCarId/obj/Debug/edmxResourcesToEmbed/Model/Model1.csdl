@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AppointmentDetail">
+    <Key>
+      <PropertyRef Name="AppointmentID" />
+      <PropertyRef Name="CarID" />
+    </Key>
+    <Property Name="AppointmentID" Type="Int32" Nullable="false" />
+    <Property Name="CarID" Type="Int32" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="AppointmentHeader" Relationship="Self.FK_AppointmentDetail_ToAppoinmentHeader" FromRole="AppointmentDetail" ToRole="AppointmentHeader" />
+    <NavigationProperty Name="Car" Relationship="Self.FK_AppointmentDetail_ToCar" FromRole="AppointmentDetail" ToRole="Car" />
+  </EntityType>
+  <EntityType Name="AppointmentHeader">
+    <Key>
+      <PropertyRef Name="AppointmentID" />
+    </Key>
+    <Property Name="AppointmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="AppointmentDetails" Relationship="Self.FK_AppointmentDetail_ToAppoinmentHeader" FromRole="AppointmentHeader" ToRole="AppointmentDetail" />
+    <NavigationProperty Name="User" Relationship="Self.FK_AppointmentHeader_ToUser" FromRole="AppointmentHeader" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="CarID" />
+    </Key>
+    <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SellerID" Type="Int32" Nullable="false" />
+    <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Kilometer" Type="Int32" Nullable="false" />
+    <Property Name="ProductionYear" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AppointmentDetails" Relationship="Self.FK_AppointmentDetail_ToCar" FromRole="Car" ToRole="AppointmentDetail" />
+    <NavigationProperty Name="Seller" Relationship="Self.FK_Car_ToSeller" FromRole="Car" ToRole="Seller" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_ToCar" FromRole="Car" ToRole="Cart" />
+  </EntityType>
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="CarID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="CarID" Type="Int32" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Car" Relationship="Self.FK_Cart_ToCar" FromRole="Cart" ToRole="Car" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Cart_ToUser" FromRole="Cart" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Seller">
+    <Key>
+      <PropertyRef Name="SellerID" />
+    </Key>
+    <Property Name="SellerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SellerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cars" Relationship="Self.FK_Car_ToSeller" FromRole="Seller" ToRole="Car" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="AppointmentHeaders" Relationship="Self.FK_AppointmentHeader_ToUser" FromRole="User" ToRole="AppointmentHeader" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_ToUser" FromRole="User" ToRole="Cart" />
+  </EntityType>
+  <Association Name="FK_AppointmentDetail_ToAppoinmentHeader">
+    <End Role="AppointmentHeader" Type="Self.AppointmentHeader" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AppointmentDetail" Type="Self.AppointmentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AppointmentHeader">
+        <PropertyRef Name="AppointmentID" />
+      </Principal>
+      <Dependent Role="AppointmentDetail">
+        <PropertyRef Name="AppointmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AppointmentDetail_ToCar">
+    <End Role="Car" Type="Self.Car" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AppointmentDetail" Type="Self.AppointmentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="CarID" />
+      </Principal>
+      <Dependent Role="AppointmentDetail">
+        <PropertyRef Name="CarID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AppointmentHeader_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="AppointmentHeader" Type="Self.AppointmentHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AppointmentHeader">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Car_ToSeller">
+    <End Role="Seller" Type="Self.Seller" Multiplicity="1" />
+    <End Role="Car" Type="Self.Car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Seller">
+        <PropertyRef Name="SellerID" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="SellerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_ToCar">
+    <End Role="Car" Type="Self.Car" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="CarID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="CarID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AppointmentDetails" EntityType="Self.AppointmentDetail" />
+    <EntitySet Name="AppointmentHeaders" EntityType="Self.AppointmentHeader" />
+    <EntitySet Name="Cars" EntityType="Self.Car" />
+    <EntitySet Name="Carts" EntityType="Self.Cart" />
+    <EntitySet Name="Sellers" EntityType="Self.Seller" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_AppointmentDetail_ToAppoinmentHeader" Association="Self.FK_AppointmentDetail_ToAppoinmentHeader">
+      <End Role="AppointmentHeader" EntitySet="AppointmentHeaders" />
+      <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AppointmentDetail_ToCar" Association="Self.FK_AppointmentDetail_ToCar">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AppointmentHeader_ToUser" Association="Self.FK_AppointmentHeader_ToUser">
+      <End Role="User" EntitySet="Users" />
+      <End Role="AppointmentHeader" EntitySet="AppointmentHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Car_ToSeller" Association="Self.FK_Car_ToSeller">
+      <End Role="Seller" EntitySet="Sellers" />
+      <End Role="Car" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_ToCar" Association="Self.FK_Cart_ToCar">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_ToUser" Association="Self.FK_Cart_ToUser">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

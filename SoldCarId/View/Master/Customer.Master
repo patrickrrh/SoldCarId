@@ -1,0 +1,38 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Customer.master.cs" Inherits="SoldCarId.View.Master.Customer" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="../CSS/authorizedNavBarStyle.css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+       <div class="containerNav">
+            <div class="navbar">
+                <div>
+                    <asp:Label ID="SoldCarId" runat="server" Text="SoldCarId" CssClass="navbar-logo"></asp:Label>
+                </div>
+                <div class="navbar-menu">
+                    <asp:HyperLink runat="server" NavigateUrl="~/View/Home.aspx" Text="Home"></asp:HyperLink>
+                    <asp:HyperLink runat="server" NavigateUrl="~/View/Carts.aspx" Text="Cart"></asp:HyperLink>
+                    <asp:HyperLink runat="server" NavigateUrl="~/View/AppointmentHistory.aspx" Text="Appointment"></asp:HyperLink>
+                    <asp:HyperLink runat="server" NavigateUrl="~/View/UpdateProfile.aspx" Text="Update Profile"></asp:HyperLink>
+                </div>
+                <div>
+                    <asp:LinkButton ID="logOut" runat="server" onClick="logOut_Click" CssClass="logout-button" style="text-decoration: none !important;">Logout</asp:LinkButton>
+                </div>
+            </div>
+            <div class="content">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+            </div>
+            <div class="footer">
+                SoldCarId - Find Your Dream Car - &copy; 2023
+            </div>
+        </div>
+    </form>
+</body>
+</html>
